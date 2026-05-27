@@ -1,8 +1,10 @@
 import streamlit as st
 import tempfile
+import os
 
+from dotenv import load_dotenv
 from ddgs import DDGS
-from langchain_ollama import ChatOllama
+from langchain_groq import ChatGroq
 
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
@@ -13,9 +15,14 @@ from langchain_huggingface import HuggingFaceEmbeddings
 st.set_page_config(page_title="AI Research Assistant", page_icon="🤖")
 
 st.title("AI Research Assistant")
-st.write("Web Search + PDF Study using Ollama, Streamlit, and LangChain")
+st.write("Web Search + PDF Study")
 
-llm = ChatOllama(model="llama3")
+load_dotenv()
+
+llm = ChatGroq(
+    groq_api_key=os.getenv("GROQ_API_KEY"),
+    model_name="llama-3.3-70b-versatile"
+)
 
 mode = st.selectbox(
     "Choose mode",
@@ -116,9 +123,10 @@ PDF Context:
 Instructions:
 - If PDF context is available, prioritize it.
 - If web context is available, use it for additional support.
-- Give a clear, simple, and structured answer.
+- Give a clear, detailed and structured answer.
 - If you don't know the answer, say you don't know. Don't make up information.
 - Provide only the detailed and required answer without additional comments or unnecesary information.
+- Generate detailed answers with step-by-step reasoning if the question is complex. 
 """
 
         with st.spinner("Generating Summary...."):
