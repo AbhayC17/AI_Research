@@ -12,9 +12,9 @@ from langchain_chroma import Chroma
 from langchain_huggingface import HuggingFaceEmbeddings
 
 
-st.set_page_config(page_title="AI Research Assistant", page_icon="🤖")
+st.set_page_config(page_title="AI Search Assistant", page_icon="🤖")
 
-st.title("AI Research Assistant")
+st.title("AI Search Assistant")
 st.write("Web Search + PDF Study")
 
 load_dotenv()
